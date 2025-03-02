@@ -1,5 +1,4 @@
 # LAMAR_baselines
-Baseline methods compared to LAMAR
 We compared the performance of baseline methods with LAMAR for each downstream task.  
 
 ## Prediction of splice site
@@ -19,7 +18,7 @@ We compared with RNA-FM in predicting internal ribosome entry site (IRES).
 RNA-FM is a foundation language model pretrained on non-coding RNAs, used for predicting RNA 3D structure (Nature Methods, 2024).  
 The github link is https://github.com/ml4bio/RNA-FM, from which we deployed the model.  
 We fine-tuned RNA-FM using the trainer of transformers, so we further installed the following packages:  
-```python
+```txt
 transformers==4.36.2  
 accelerate==0.26.1  
 evaluate==0.4.1  
