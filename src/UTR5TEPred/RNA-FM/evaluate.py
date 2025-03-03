@@ -83,7 +83,7 @@ def main(model_state_path, data_path, head_type, freeze):
     mse = np.mean((np.array(predict_labels) - np.array(true_labels)) ** 2)
     pearson_corr_coef = result_df.corr(method='pearson').iloc[0, 1]
     spearman_corr_coef = result_df.corr(method='spearman').iloc[0, 1]
-    
+    print('MSE: {}, Pearson Corr: {}, Spearman Corr: {}'.format(mse, pearson_corr_coef, spearman_corr_coef))
     return mse, pearson_corr_coef, spearman_corr_coef
 
 
