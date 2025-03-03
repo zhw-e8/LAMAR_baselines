@@ -29,7 +29,7 @@ class MyDataset(Dataset):
     
 def main(model_state_path, data_path, head_type, freeze):
     # Tokenizer
-    tokenizer_path = 'tokenizer/RNA-FM/'
+    tokenizer_path = '../../../tokenizer/RNA-FM/'
     model_max_length = 1026
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, model_max_length=model_max_length, padding_side='left')
     # Config
@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
     main(
         args.model_state_path, 
-        args.data_pathh, 
+        args.data_path, 
         args.head_type, 
         args.freeze
     )
