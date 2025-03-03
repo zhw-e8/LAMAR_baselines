@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../../../RNA-FM/')
 from sequence_classification_patch import Config, RnafmForSequenceClassification
 import torch
 from torch.utils.data import Dataset, DataLoader
@@ -7,6 +9,7 @@ import numpy as np
 import pandas as pd
 import tqdm
 from sklearn.metrics import r2_score
+import argparse
 
 
 class MyDataset(Dataset):
@@ -85,3 +88,19 @@ def main(model_state_path, data_path, head_type, freeze):
     r2 = r2_score(np.array(true_labels), np.array(predict_labels))
     
     return mse, pearson_corr_coef, spearman_corr_coef, r2
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='5 prime UTR TE prediction')
+    parser.add_argument('--model_state_path', type=str, help='Path of fine-tuned model')
+    parser.add_argument('--data_path', type=str, help='Path of validation dataset')
+    parser.add_argument('--head_type', type=str, help='Type of prediction head')
+    parser.add_argument('--freeze', action='store_true', help='Freeze pretrained weights')
+    args = parser.parse_args()
+
+    main(
+        args.model_state_path, 
+        args.data_pathh, 
+        args.head_type, 
+        args.freeze
+    )

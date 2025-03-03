@@ -8,6 +8,7 @@ import os
 import numpy as np
 import pandas as pd
 import tqdm
+import argparse
 
 
 class MyDataset(Dataset):
@@ -27,9 +28,8 @@ class MyDataset(Dataset):
     
     
 def main(model_state_path, data_path, head_type, freeze):
-    os.chdir('/work/home/rnasys/zhouhanwen/nucTran')
     # Tokenizer
-    tokenizer_path = 'tokenizer/rnafm/'
+    tokenizer_path = 'tokenizer/RNA-FM/'
     model_max_length = 1026
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, model_max_length=model_max_length, padding_side='left')
     # Config
@@ -43,7 +43,7 @@ def main(model_state_path, data_path, head_type, freeze):
     data = DataLoader(dataset, batch_size=batch_size, shuffle=False, drop_last=False)
     # Model
     device = torch.device('cuda:0')
-    pretrained_state_path = '/work/home/rnasys/zhouhanwen/nucTran/src/RNAFM/RNA-FM-main/src/RNAFM/RNA-FM_pretrained.pth'
+    pretrained_state_path = '../../../RNA-FM/RNA-FM_pretrained.pth'
     model = RnafmForSequenceClassification(pretrained_weights_location=pretrained_state_path, hyperparams=hyperparams, head_type=head_type, freeze=freeze)    
     model = model.to(device)
     if model_state_path.endswith('.safetensors'):
@@ -85,3 +85,19 @@ def main(model_state_path, data_path, head_type, freeze):
     spearman_corr_coef = result_df.corr(method='spearman').iloc[0, 1]
     
     return mse, pearson_corr_coef, spearman_corr_coef
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='5 prime UTR TE prediction')
+    parser.add_argument('--model_state_path', type=str, help='Path of fine-tuned model')
+    parser.add_argument('--data_path', type=str, help='Path of validation dataset')
+    parser.add_argument('--head_type', type=str, help='Type of prediction head')
+    parser.add_argument('--freeze', action='store_true', help='Freeze pretrained weights')
+    args = parser.parse_args()
+
+    main(
+        args.model_state_path, 
+        args.data_pathh, 
+        args.head_type, 
+        args.freeze
+    )

@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../../../RNA-FM/')
 from sequence_classification_patch import Config, RnafmForSequenceClassification
 from transformers import AutoConfig, AutoTokenizer, DataCollatorWithPadding, TrainingArguments, Trainer
 from datasets import load_from_disk
@@ -55,7 +57,7 @@ def main(
         tokenizer=tokenizer, padding=True
     )
     # Model
-    pretrained_state_path = '/work/home/rnasys/zhouhanwen/nucTran/src/RNAFM/RNA-FM-main/src/RNAFM/RNA-FM_pretrained.pth'
+    pretrained_state_path = '../../../RNA-FM/RNA-FM_pretrained.pth'
     model = RnafmForSequenceClassification(pretrained_weights_location=pretrained_state_path, hyperparams=hyperparams, head_type=head_type, freeze=freeze)    
     # Training arguments
     train_args = TrainingArguments(
@@ -97,7 +99,7 @@ def main(
 
     
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='IRES prediction')
+    parser = argparse.ArgumentParser(description='3 prime UTR Degradation prediction')
     parser.add_argument('--tokenizer_path', type=str, help='Directory of tokenizer')
     parser.add_argument('--model_max_length', type=int, help='Model input size')
     parser.add_argument('--hidden_dropout_prob', type=float, help='Hidden dropout probability')
