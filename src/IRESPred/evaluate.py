@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../../../RNA-FM/')
 from sequence_classification_patch import Config, RnafmForSequenceClassification
 import torch
 from torch import nn
@@ -8,6 +10,7 @@ import numpy as np
 import pandas as pd
 import tqdm
 from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score, roc_auc_score, precision_recall_curve, auc
+import argparse
 
 
 def compute_pr_auc(true_ids, probs):
@@ -27,7 +30,6 @@ def compute_pr_auc(true_ids, probs):
 
 
 def main(model_state_path, data_path, head_type, freeze):
-    os.chdir('/work/home/rnasys/zhouhanwen/nucTran')
     # Tokenizer
     tokenizer_path = 'tokenizer/rnafm/'
     model_max_length = 1500
@@ -43,7 +45,7 @@ def main(model_state_path, data_path, head_type, freeze):
     true_labels = seq_df['label'].values.tolist()
     # Model
     device = torch.device('cuda:0')
-    pretrained_state_path = '/work/home/rnasys/zhouhanwen/nucTran/src/RNAFM/RNA-FM-main/src/RNAFM/RNA-FM_pretrained.pth'
+    pretrained_state_path = '../../../RNA-FM/RNA-FM_pretrained.pth'
     model = RnafmForSequenceClassification(pretrained_weights_location=pretrained_state_path, hyperparams=hyperparams, head_type=head_type, freeze=freeze)    
     model = model.to(device)
     if model_state_path.endswith('.safetensors'):
@@ -84,3 +86,19 @@ def main(model_state_path, data_path, head_type, freeze):
     pr_auc = compute_pr_auc(true_labels, predict_probs)
     
     return precision, recall, f1, roc_auc, pr_auc
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='IRES prediction')
+    parser.add_argument('--model_state_path', type=str, help='Path of fine-tuned model')
+    parser.add_argument('--data_path', type=str, help='Path of validation dataset')
+    parser.add_argument('--head_type', type=str, help='Type of prediction head')
+    parser.add_argument('--freeze', action='store_true', help='Freeze pretrained weights')
+    args = parser.parse_args()
+
+    main(
+        args.model_state_path, 
+        args.data_pathh, 
+        args.head_type, 
+        args.freeze
+    )

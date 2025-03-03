@@ -1,9 +1,13 @@
+import sys
+sys.path.append('../../../RNA-FM/')
 from sequence_classification_patch import Config, RnafmForSequenceClassification
 from transformers import AutoConfig, AutoTokenizer, DataCollatorWithPadding, TrainingArguments, Trainer
 from datasets import load_from_disk
 import os
 import numpy as np
 import pandas as pd
+import evaluate
+from scikit_learn import precision_recall_curve, auc
 import argparse
 
 
@@ -14,11 +18,11 @@ def compute_metrics(p):
     pred_probs: predict probabilities
     """
     # metrics
-    accuracy = evaluate.load("/work/home/rnasys/zhouhanwen/nucTran/metrics/accuracy")
-    precision = evaluate.load("/work/home/rnasys/zhouhanwen/nucTran/metrics/precision")
-    recall = evaluate.load("/work/home/rnasys/zhouhanwen/nucTran/metrics/recall")
-    f1 = evaluate.load("/work/home/rnasys/zhouhanwen/nucTran/metrics/f1")
-    roc_auc = evaluate.load("/work/home/rnasys/zhouhanwen/nucTran/metrics/roc_auc")
+    accuracy = evaluate.load("../../../metrics/accuracy")
+    precision = evaluate.load("../../..//metrics/precision")
+    recall = evaluate.load("../../../metrics/recall")
+    f1 = evaluate.load("../../../metrics/f1")
+    roc_auc = evaluate.load("../../../metrics/roc_auc")
     
     predictions, labels = p
     pred_probs = np.exp(predictions) / np.sum(np.exp(predictions), axis=1, keepdims=True)
@@ -72,7 +76,7 @@ def main(
         tokenizer=tokenizer, padding=True
     )
     # Model
-    pretrained_state_path = '/work/home/rnasys/zhouhanwen/nucTran/src/RNAFM/RNA-FM-main/src/RNAFM/RNA-FM_pretrained.pth'
+    pretrained_state_path = '../../../RNA-FM/RNA-FM_pretrained.pth'
     model = RnafmForSequenceClassification(pretrained_weights_location=pretrained_state_path, hyperparams=hyperparams, head_type=head_type, freeze=freeze)    
     # Training arguments
     train_args = TrainingArguments(
@@ -110,7 +114,7 @@ def main(
 
     
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='5 prime UTR TE prediction')
+    parser = argparse.ArgumentParser(description='IRES prediction')
     parser.add_argument('--tokenizer_path', type=str, help='Directory of tokenizer')
     parser.add_argument('--model_max_length', type=int, help='Model input size')
     parser.add_argument('--hidden_dropout_prob', type=float, help='Hidden dropout probability')
