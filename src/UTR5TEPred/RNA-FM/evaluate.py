@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../../../RNA-FM/')
 from sequence_classification_patch import Config, RnafmForSequenceClassification
 import torch
 from torch.utils.data import Dataset, DataLoader

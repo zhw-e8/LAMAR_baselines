@@ -1,7 +1,5 @@
 import torch
 from torch import nn
-import sys
-sys.path.append('/work/home/rnasys/zhouhanwen/nucTran/src/RNAFM/RNA-FM-main/')
 import fm
 import argparse
 from typing import List, Optional, Tuple, Union
