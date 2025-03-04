@@ -26,6 +26,6 @@ src/UTR5TEPred/RNA-FM/finetune.py \
 --total_epochs=${2} \
 --grad_clipping_norm=1 \
 --accum_steps=${as} \
---output_dir=UTR5TEPred/saving_model/RNAFM/bs${1}_lr${3}_wr0.05_${2}epochs_${4} \
+--output_dir=UTR5TEPred/saving_model/RNA-FM/bs${1}_lr${3}_wr0.05_${2}epochs_${4} \
 --logging_steps=100 \
 --save_epochs=100

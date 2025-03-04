@@ -1,3 +1,5 @@
+import sys
+sys.path.append('UTR-LM/')
 from sequence_classification_patch import Config, UTRLMForSequenceClassification
 from transformers import AutoConfig, AutoTokenizer, DataCollatorWithPadding, TrainingArguments, Trainer
 from datasets import load_from_disk
@@ -58,11 +60,11 @@ def main(
         tokenizer=tokenizer, padding=True
     )
     # Model
-    model = UTRLMForSequenceClassification(hyperparams, head_type='Linear', freeze=False)
+    model = UTRLMForSequenceClassification(hyperparams, head_type=head_type, freeze=freeze)
     if model_name == 'ESM2':
-        pretrain_state_path = '/work/home/rnasys/zhouhanwen/nucTran/src/UTRLM/Pretrained/ESM2SI_3.1_fiveSpeciesCao_6layers_16heads_128embedsize_4096batchToks_MLMLossMin.pkl'
+        pretrain_state_path = 'UTR-LM/Pretrained/ESM2SI_3.1_fiveSpeciesCao_6layers_16heads_128embedsize_4096batchToks_MLMLossMin.pkl'
     elif model_name == 'ESM2_SISS':
-        pretrain_state_path = '/work/home/rnasys/zhouhanwen/nucTran/src/UTRLM/Pretrained/ESM2SISS_FS4.1_fiveSpeciesCao_6layers_16heads_128embedsize_4096batchToks_lr1e-05_supervisedweight1.0_structureweight1.0_MLMLossMin_epoch93.pkl'
+        pretrain_state_path = 'UTR-LM/Pretrained/ESM2SISS_FS4.1_fiveSpeciesCao_6layers_16heads_128embedsize_4096batchToks_lr1e-05_supervisedweight1.0_structureweight1.0_MLMLossMin_epoch93.pkl'
     weights = torch.load(pretrain_state_path, map_location='cpu')
     weights_dict = {}
     for k, v in weights.items():
