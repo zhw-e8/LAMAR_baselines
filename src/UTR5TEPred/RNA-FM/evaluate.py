@@ -1,5 +1,5 @@
 import sys
-sys.path.append('../../../RNA-FM/')
+sys.path.append('RNA-FM/')
 from sequence_classification_patch import Config, RnafmForSequenceClassification
 import torch
 from torch.utils.data import Dataset, DataLoader
@@ -29,7 +29,7 @@ class MyDataset(Dataset):
     
 def main(model_state_path, data_path, head_type, freeze):
     # Tokenizer
-    tokenizer_path = '../../../tokenizer/RNA-FM/'
+    tokenizer_path = 'tokenizer/RNA-FM/'
     model_max_length = 1026
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, model_max_length=model_max_length, padding_side='left')
     # Config
@@ -43,7 +43,7 @@ def main(model_state_path, data_path, head_type, freeze):
     data = DataLoader(dataset, batch_size=batch_size, shuffle=False, drop_last=False)
     # Model
     device = torch.device('cuda:0')
-    pretrained_state_path = '../../../RNA-FM/RNA-FM_pretrained.pth'
+    pretrained_state_path = 'RNA-FM/RNA-FM_pretrained.pth'
     model = RnafmForSequenceClassification(pretrained_weights_location=pretrained_state_path, hyperparams=hyperparams, head_type=head_type, freeze=freeze)    
     model = model.to(device)
     if model_state_path.endswith('.safetensors'):
