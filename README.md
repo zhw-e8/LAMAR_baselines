@@ -11,7 +11,10 @@ We compared the performance of baseline methods with LAMAR for each downstream t
 | Predict internal ribosome entry site (IRES)         | RNA-FM                 |
 
 
-## Deploy Baseline methods
+## Deploy baseline methods
+
+### Environment
+
 ### RNA-FM
 RNA-FM is a foundation language model pretrained on non-coding RNAs, used for predicting RNA 3D structure (Nature Methods, 2024).  
 The github link is https://github.com/ml4bio/RNA-FM, from which we deployed the model.  
