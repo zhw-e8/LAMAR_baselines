@@ -29,7 +29,7 @@ datasets==2.18.0
 The tokenizer was developed for RNA-FM.  
 
 ### RNAErnie
-RNAErnie is a foundation language model pretrained on non-coding RNAs, used for predicting RNA secondary structures and RNA-RNA interactions (Nature Machine Intelligence, 2024).
+RNAErnie is a foundation language model pretrained on non-coding RNAs, used for predicting RNA secondary structures and RNA-RNA interactions (Nature Machine Intelligence, 2024).  
 The github link is https://github.com/CatIIIIIIII/RNAErnie, from which we deployed the model (pytorch-version).  
 We fine-tuned RNAErnie using the trainer of transformers, and installed the same packages as fine-tuning RNA-FM.  
 The tokenizer was developed for RNAErnie.   
