@@ -30,13 +30,15 @@ The tokenizer was developed for RNA-FM.
 
 ### RNAErnie
 RNAErnie is a foundation language model pretrained on non-coding RNAs, used for predicting RNA secondary structures and RNA-RNA interactions (Nature Machine Intelligence, 2024).
-The github link is https://github.com/CatIIIIIIII/RNAErnie, from which we deployed the model (pytorch-version).
-We fine-tuned RNAErnie using the trainer of transformers, and installed the same packages as fine-tuning RNA-FM.
+The github link is https://github.com/CatIIIIIIII/RNAErnie, from which we deployed the model (pytorch-version).  
+We fine-tuned RNAErnie using the trainer of transformers, and installed the same packages as fine-tuning RNA-FM.  
+The tokenizer was developed for RNAErnie.   
 
 ### UTR-LM
 UTR-LM is a foundation language model pretrained on sequences and structures of 5' UTR, used for predicting translation efficiency of mRNA based on 5' UTR (Nature Machine Intelligence, 2024).  
 The script link is https://github.com/a96123155/UTR-LM, from which we deployed the model.  
 We fine-tuned UTR-LM using the trainer of transformers, and installed the same packages as fine-tuning RNA-FM.  
+The tokenizer was developed for UTR-LM.  
 
 ### SpliceAI
 SpliceAI is a CNN model to predict splice site from pre-mRNA sequence (Cell, 2019).  
